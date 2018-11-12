@@ -7,6 +7,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +16,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainModelActivity extends AppCompatActivity {
+    DatabaseHelper myDb;
 /*
     private ImageButton mTrainingPhotoButton;
     private ImageView mTrainingPhotoView;
@@ -32,6 +36,7 @@ public class TrainModelActivity extends AppCompatActivity {
 
     private ImageButton mTrainingPhotoButton;
     private ImageView mTrainingPhotoView;
+    private ArrayList<String> directories;
     static final int CAM_REQUEST = 2;
 
 
@@ -39,12 +44,15 @@ public class TrainModelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_model);
+        myDb = new DatabaseHelper(this);
 
 
         mTrainingPhotoButton = (ImageButton) findViewById(R.id.training_camera);
         mTrainingPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                directories = new ArrayList<>();
+
 /*
                 Intent intent4 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getFile();
@@ -97,6 +105,54 @@ public class TrainModelActivity extends AppCompatActivity {
         mTrainingPhotoView = (ImageView) findViewById(R.id.training_photo);
  //       updatePhotoView();
  */
+    }
+
+    private void init(){
+        //"storage/emulated/0"
+        String ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
+        String PICTURES = ROOT_DIR + "/Pictures";
+        String CAMERA = ROOT_DIR + "/DCIM/camera";
+
+        if(getDirectoryPaths(PICTURES) != null){
+            directories = getDirectoryPaths(PICTURES);
+        }
+        directories.add(CAMERA);
+
+       // ArrayAdapter<String> adapter new
+
+    }
+    /**
+     * Search a dictory and return a list of all **directory** contained inside
+     * @param directory
+     * @return
+     */
+    private ArrayList<String> getDirectoryPaths(String directory){
+        ArrayList<String>pathArray = new ArrayList<>();
+        File file = new File(directory);
+        File[] listfiles = file.listFiles();
+        for(int i = 0; i < listfiles.length; i++){
+            if(listfiles[i].isDirectory()){
+                pathArray.add(listfiles[i].getAbsolutePath());
+            }
+        }
+        return pathArray;
+    }
+
+    /**
+     * Search a dictory and return a list of all **files** contained inside
+     * @param directory
+     * @return
+     */
+    private ArrayList<String> getFilePaths(String directory){
+        ArrayList<String>pathArray = new ArrayList<>();
+        File file = new File(directory);
+        File[] listfiles = file.listFiles();
+        for(int i = 0; i < listfiles.length; i++){
+            if(listfiles[i].isFile()){
+                pathArray.add(listfiles[i].getAbsolutePath());
+            }
+        }
+        return pathArray;
     }
 
 
