@@ -13,8 +13,8 @@
         android:background="#161616"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="1dp">
-
     </android.support.constraint.ConstraintLayout>
+
 
     <ImageButton
         android:id="@+id/btn_filemenu"
