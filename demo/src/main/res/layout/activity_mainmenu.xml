@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="383dp"
+        android:layout_height="66dp"
+        android:background="#161616"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="1dp">
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/btn_filemenu"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#00aa66cc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/folder_icon"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="175dp"
+        android:layout_height="30dp"
+        android:background="@color/primaryDark"
+        android:text="Edit Profile"
+        android:textColor="@android:color/background_light"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="521dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BROWSE FILES"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="321dp" />
+
+</android.support.constraint.ConstraintLayout>
