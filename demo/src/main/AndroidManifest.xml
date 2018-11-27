@@ -49,6 +49,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Demo" />
+        <activity
+            android:name=".FileMenuActivity"
+            android:label="@string/title_activity_file_menu"
             android:theme="@style/Theme.Demo"></activity>
     </application>
 

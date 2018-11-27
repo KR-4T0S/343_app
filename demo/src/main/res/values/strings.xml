@@ -46,4 +46,9 @@
     <string name="title_activity_pincode">PincodeActivity</string>
     <string name="title_activity_train_model">TrainModelActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="file_menu_button">FILE MENU</string>
+    <string name="title_activity_file_menu">FileMenuActivity</string>
+    <string name="file_menu_toast">Hello, World!</string>
+    <string name="add_file_button">ADD FILE</string>
+    <string name="add_folder_button">ADD FOLDER</string>
 </resources>

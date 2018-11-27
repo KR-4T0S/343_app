@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 //import com.google.android.cameraview.demo.R;
 import csulb.cecs343.lair.R;
@@ -13,6 +14,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private Button mLoginButton;
     private Button mCreateProfileButton;
+    private Button mFileMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +40,19 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+        mFileMenuButton = (Button) findViewById(R.id.file_menu_button);
+        mFileMenuButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Toast.makeText(Main2Activity.this,
+                //                R.string.file_menu_toast,
+                //                Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Main2Activity.this, FileMenuActivity.class);
+                startActivity(intent);
+            }
+        }
+        );
     }
 }
