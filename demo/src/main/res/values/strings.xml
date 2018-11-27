@@ -11,9 +11,9 @@
     limitations under the License.
 -->
 <resources>
-    <string name="app_name">Dlib Face Recognition</string>
-    <string name="camera_permission_confirmation">This app demonstrates the usage of CameraView. In order to do that, it needs permission to access camera.</string>
-    <string name="camera_permission_not_granted">Camera app cannot do anything without camera permission.</string>
+    <string name="app_name">Lair</string>
+    <string name="camera_permission_confirmation">Lair uses facial recognition to keep your files safely locked, but in order to do that, it needs permission to access camera.</string>
+    <string name="camera_permission_not_granted">This app cannot do anything without camera permission.</string>
     <string name="picture_taken">Picture taken</string>
     <string name="aspect_ratio">Aspect ratio</string>
     <string name="switch_flash">Switch flash</string>
