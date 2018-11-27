@@ -16,6 +16,8 @@ public class Main2Activity extends AppCompatActivity {
     private Button mCreateProfileButton;
     private Button mFileMenuButton;
 
+    //random comment
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
