@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,8 +81,23 @@ public class FileMenuActivity extends AppCompatActivity
         testList.add("World");
         testList.add("World");
 
+        ArrayAdapter  adapter = new ArrayAdapter  (this, android.R.layout.simple_expandable_list_item_1, testList)
+        {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the current item from ListView
+                View view = super.getView(position,convertView,parent);
+                if(position %2 == 1) {
+                    // Set a background color for ListView regular row/item
+                    view.setBackgroundColor(Color.parseColor("#403F3F"));
+                } else {
+                    // Set the background color for alternate row/item
+                    view.setBackgroundColor(Color.parseColor("#333333"));
+                }
+                return view;
+            }
+        };
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, testList);
 
         mMenuList.setAdapter(adapter);
     }
