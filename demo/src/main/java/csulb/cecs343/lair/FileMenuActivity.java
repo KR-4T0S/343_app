@@ -84,20 +84,25 @@ public class FileMenuActivity extends AppCompatActivity
         ArrayAdapter  adapter = new ArrayAdapter  (this, android.R.layout.simple_expandable_list_item_1, testList)
         {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
+            public View getView(int position, View convertView, ViewGroup parent)
+            {
                 // Get the current item from ListView
                 View view = super.getView(position,convertView,parent);
-                if(position %2 == 1) {
+                if(position % 2 == 1)
+                {
                     // Set a background color for ListView regular row/item
-                    view.setBackgroundColor(Color.parseColor("#403F3F"));
-                } else {
+                    //view.setBackgroundColor(Color.parseColor("#403F3F"));
+                    view.setBackgroundResource(android.R.color.transparent);
+                }
+                else
+                {
                     // Set the background color for alternate row/item
-                    view.setBackgroundColor(Color.parseColor("#333333"));
+                    //view.setBackgroundColor(Color.parseColor("#333333"));
+                    view.setBackgroundResource(android.R.color.darker_gray);
                 }
                 return view;
             }
         };
-
 
         mMenuList.setAdapter(adapter);
     }
