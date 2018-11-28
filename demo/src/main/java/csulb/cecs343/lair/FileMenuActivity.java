@@ -23,20 +23,43 @@ import android.widget.Button;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class FileMenuActivity extends AppCompatActivity
 {
+    private Context mContext;
     private Button mAddFileButton;
     private Button mAddFolderButton;
     private Button mAddDeleteButton;
+    private List<Element> mData = Collections.emptyList();
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filemenu);
+
+        mContext = getApplicationContext();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.items);
+
+        mData = fill_with_data();
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new RecyclerViewAdapter(mData, mContext);
+        mRecyclerView.setAdapter(mAdapter);
+
+/*      RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(itemAnimator);*/
 
         mAddFileButton = (Button) findViewById(R.id.add_file_button);
         mAddFileButton.setOnClickListener(new View.OnClickListener()
@@ -67,7 +90,7 @@ public class FileMenuActivity extends AppCompatActivity
                 //Button button = (Button) v;
                 //((Button) v).setText("clicked");
 
-                ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                /*ContextWrapper cw = new ContextWrapper(getApplicationContext());
                 File directory = cw.getDir("themes", Context.MODE_WORLD_WRITEABLE);
 
                 File new_file =new File(directory.getAbsolutePath() + File.separator +  "folder_icon.png");
@@ -80,7 +103,11 @@ public class FileMenuActivity extends AppCompatActivity
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                Log.d("Create File", "File exists?"+new_file.exists());
+                Log.d("Create File", "File exists?"+new_file.exists());*/
+                int position = 0;
+                mData.add(position, new Element("Test", R.drawable.ic_folder));
+                mAdapter.notifyItemInserted(position);
+                mRecyclerView.scrollToPosition(position);
             }
         }
         );
@@ -99,18 +126,6 @@ public class FileMenuActivity extends AppCompatActivity
             }
         }
         );
-
-        List<Element> data = fill_with_data();
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.items);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
     }
 
     public List<Element> fill_with_data()
