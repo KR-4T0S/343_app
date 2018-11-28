@@ -11,13 +11,11 @@ public class ViewHolder extends RecyclerView.ViewHolder
 {
     TextView name;
     ImageView image;
-    CheckBox checkbox;
 
     ViewHolder(View itemView)
     {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.name);
         image = (ImageView) itemView.findViewById(R.id.image);
-        checkbox = (CheckBox)  itemView.findViewById(R.id.checkbox);
     }
 }

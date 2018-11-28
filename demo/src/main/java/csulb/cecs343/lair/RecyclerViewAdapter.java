@@ -11,10 +11,10 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>
 {
-    List<Folder> list = Collections.emptyList();
+    List<Element> list = Collections.emptyList();
     Context context;
 
-    public RecyclerViewAdapter(List<Folder> list, Context context)
+    public RecyclerViewAdapter(List<Element> list, Context context)
     {
         this.list = list;
         this.context = context;
@@ -57,16 +57,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>
     }
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, Folder folder)
+    public void insert(int position, Element element)
     {
-        list.add(position, folder);
+        list.add(position, element);
         notifyItemInserted(position);
     }
 
     // Remove a RecyclerView item containing a specified Data object
-    public void remove(Folder folder)
+    public void remove(Element element)
     {
-        int position = list.indexOf(folder);
+        int position = list.indexOf(element);
         list.remove(position);
         notifyItemRemoved(position);
     }

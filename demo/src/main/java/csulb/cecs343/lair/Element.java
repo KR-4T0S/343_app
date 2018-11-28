@@ -1,11 +1,11 @@
 package csulb.cecs343.lair;
 
-public class Folder
+public class Element
 {
     public String title;
     public int imageId;
 
-    Folder(String title, int imageId)
+    Element(String title, int imageId)
     {
         this.title = title;
         this.imageId = imageId;

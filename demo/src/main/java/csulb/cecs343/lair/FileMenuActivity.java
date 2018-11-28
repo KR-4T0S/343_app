@@ -31,7 +31,6 @@ public class FileMenuActivity extends AppCompatActivity
     private Button mAddFileButton;
     private Button mAddFolderButton;
     private Button mAddDeleteButton;
-    private ListView mMenuList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,45 +100,12 @@ public class FileMenuActivity extends AppCompatActivity
         }
         );
 
-
-        //mMenuList = (ListView) findViewById(R.id.menu_list);
-
-        //ArrayList<String> testList = new ArrayList<>();
-
-        //testList.add("Hello");
-        //testList.add("World");
-
-        List<Folder> data = fill_with_data();
+        List<Element> data = fill_with_data();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.items);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-/*        ArrayAdapter  adapter = new ArrayAdapter  (this, android.R.layout.simple_expandable_list_item_1, testList)
-        {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent)
-            {
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-                if(position % 2 == 1)
-                {
-                    // Set a background color for ListView regular row/item
-                    //view.setBackgroundColor(Color.parseColor("#403F3F"));
-                    view.setBackgroundResource(android.R.color.transparent);
-                }
-                else
-                {
-                    // Set the background color for alternate row/item
-                    //view.setBackgroundColor(Color.parseColor("#333333"));
-                    view.setBackgroundResource(android.R.color.darker_gray);
-                }
-                return view;
-            }
-        };*/
-
-        //mMenuList.setAdapter(adapter);
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
@@ -147,17 +113,17 @@ public class FileMenuActivity extends AppCompatActivity
         recyclerView.setItemAnimator(itemAnimator);
     }
 
-    public List<Folder> fill_with_data()
+    public List<Element> fill_with_data()
     {
 
-        List<Folder> data = new ArrayList<>();
+        List<Element> data = new ArrayList<>();
 
-        data.add(new Folder("Batman vs Superman",R.drawable.ic_folder));
-        data.add(new Folder("X-Men: Apocalypse", R.drawable.ic_folder));
-        data.add(new Folder("Captain America: Civil War", R.drawable.ic_folder));
-        data.add(new Folder("Kung Fu Panda 3", R.drawable.ic_folder));
-        data.add(new Folder("Warcraft", R.drawable.ic_folder));
-        data.add(new Folder("Alice in Wonderland", R.drawable.ic_folder));
+        data.add(new Element("Batman vs Superman",R.drawable.ic_folder));
+        data.add(new Element("X-Men: Apocalypse", R.drawable.ic_folder));
+        data.add(new Element("Captain America: Civil War", R.drawable.ic_folder));
+        data.add(new Element("Kung Fu Panda 3", R.drawable.ic_file));
+        data.add(new Element("Warcraft", R.drawable.ic_file));
+        data.add(new Element("Alice in Wonderland", R.drawable.ic_file));
 
         return data;
     }
