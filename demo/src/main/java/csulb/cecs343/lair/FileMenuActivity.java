@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,14 +102,21 @@ public class FileMenuActivity extends AppCompatActivity
         );
 
 
-        mMenuList = (ListView) findViewById(R.id.menu_list);
+        //mMenuList = (ListView) findViewById(R.id.menu_list);
 
-        ArrayList<String> testList = new ArrayList<>();
+        //ArrayList<String> testList = new ArrayList<>();
 
-        testList.add("Hello");
-        testList.add("World");
+        //testList.add("Hello");
+        //testList.add("World");
 
-        ArrayAdapter  adapter = new ArrayAdapter  (this, android.R.layout.simple_expandable_list_item_1, testList)
+        List<Folder> data = fill_with_data();
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.items);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+/*        ArrayAdapter  adapter = new ArrayAdapter  (this, android.R.layout.simple_expandable_list_item_1, testList)
         {
             @Override
             public View getView(int position, View convertView, ViewGroup parent)
@@ -127,9 +137,29 @@ public class FileMenuActivity extends AppCompatActivity
                 }
                 return view;
             }
-        };
+        };*/
 
-        mMenuList.setAdapter(adapter);
+        //mMenuList.setAdapter(adapter);
+
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(itemAnimator);
+    }
+
+    public List<Folder> fill_with_data()
+    {
+
+        List<Folder> data = new ArrayList<>();
+
+        data.add(new Folder("Batman vs Superman",R.drawable.ic_folder));
+        data.add(new Folder("X-Men: Apocalypse", R.drawable.ic_folder));
+        data.add(new Folder("Captain America: Civil War", R.drawable.ic_folder));
+        data.add(new Folder("Kung Fu Panda 3", R.drawable.ic_folder));
+        data.add(new Folder("Warcraft", R.drawable.ic_folder));
+        data.add(new Folder("Alice in Wonderland", R.drawable.ic_folder));
+
+        return data;
     }
 
 }
