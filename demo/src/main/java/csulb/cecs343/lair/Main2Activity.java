@@ -23,8 +23,8 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Run other tests here
-        //init_test_filedb(); // test file db
+        // Run other tests here BEFORE running any activity
+        // init_test_filedb(); // test file db
 
         // Run instances of activities here
         init_app_login(); // this initiates with login (main) page, comment out for testing other activities.
@@ -89,5 +89,6 @@ public class Main2Activity extends AppCompatActivity {
         db.addFile("totally not nudes", "png", "/root/pictures","3");
 
         db.close();
+        db.deleteDB(this);
     }
 }

@@ -191,4 +191,12 @@ public class FileDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_FOLDERS, FOLDERS_PK1 + "=" + folderID, null) > 0;
     }
+
+    public void deleteDB(Context mContext) {
+        try {
+            mContext.deleteDatabase(DATABASE_NAME);
+        }finally {
+
+        }
+    }
 }
