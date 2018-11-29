@@ -181,4 +181,14 @@ public class FileDatabaseHelper extends SQLiteOpenHelper {
 
         return results;
     }
+
+    public boolean deleteFile(String fileID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_FILES, FILES_PK1 + "=" + fileID, null) > 0;
+    }
+
+    public boolean deleteFolder(String folderID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_FOLDERS, FOLDERS_PK1 + "=" + folderID, null) > 0;
+    }
 }
