@@ -1,6 +1,7 @@
 package csulb.cecs343.lair;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,9 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Run other tests here
+        //init_test_filedb(); // test file db
 
         // Run instances of activities here
         init_app_login(); // this initiates with login (main) page, comment out for testing other activities.
@@ -65,5 +69,25 @@ public class Main2Activity extends AppCompatActivity {
                                                }
                                            }
         );
+    }
+
+    private void init_test_filedb() {
+        // START Initiate db //
+        FileDatabaseHelper db = new FileDatabaseHelper(this);
+        db.getWritableDatabase(); // THIS IS REQUIRED
+        // END Inidiate db //
+
+        db.addFolder("ROOT", "/", "");
+        db.addFolder("videos", "/root","1");
+        db.addFolder("pictures", "/root", "1");
+
+        db.addFile("test file", "jpg","/root", "1");
+        db.addFile("Fido at the beach", "mp4", "/root/videos","2");
+        db.addFile("cat playing piano", "mp4", "/root/videos","2");
+        db.addFile("evolution of dance", "mp4", "/root/videos","2");
+        db.addFile("family reunion 2016", "png", "/root/pictures","3");
+        db.addFile("totally not nudes", "png", "/root/pictures","3");
+
+        db.close();
     }
 }
