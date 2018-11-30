@@ -48,6 +48,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="file_menu_button">FILE MENU</string>
     <string name="title_activity_file_menu">FileMenuActivity</string>
+    <string name="title_activity_file_view">FileViewActivity</string>
     <string name="file_menu_toast">Hello, World!</string>
     <string name="add_file_button">+FILE</string>
     <string name="add_folder_button">+FOLDER</string>

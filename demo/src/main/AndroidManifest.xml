@@ -54,6 +54,10 @@
             android:name=".FileMenuActivity"
             android:label="@string/title_activity_file_menu"
             android:theme="@style/Theme.Demo"></activity>
+        <activity
+            android:name=".FileViewActivity"
+            android:label="@string/title_activity_file_view"
+            android:theme="@style/Theme.Demo"></activity>
     </application>
 
 </manifest>

@@ -27,7 +27,8 @@ public class Main2Activity extends AppCompatActivity {
         // init_test_filedb(); // test file db
 
         // Run instances of activities here
-        init_app_login(); // this initiates with login (main) page, comment out for testing other activities.
+        //nit_app_login(); // this initiates with login (main) page, comment out for testing other activities.
+        init_test_fileview();
 
     }
 
@@ -90,5 +91,15 @@ public class Main2Activity extends AppCompatActivity {
 
         db.close();
         db.deleteDB(this);
+    }
+
+    private void init_test_fileview() {
+        String fileSource = "/storage/files/6334029+_8dc9b60846f726cf2c09446db693f156.jpg";
+        String fileName = "Test Image";
+        Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
+        fileview.putExtra("fileSource", fileSource);
+        fileview.putExtra("fileName", fileName);
+        fileview.putExtra("type", FileViewActivity.IMAGE);
+        startActivity(fileview);
     }
 }
