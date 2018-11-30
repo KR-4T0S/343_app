@@ -163,7 +163,6 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(FileMenuActivity.this, mInputResult, Toast.LENGTH_SHORT).show();
                 int position = 0;
                 List<Integer> positions = new ArrayList<>();
 
