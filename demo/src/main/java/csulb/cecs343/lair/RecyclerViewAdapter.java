@@ -2,9 +2,11 @@ package csulb.cecs343.lair;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>
 {
     List<Element> list = Collections.emptyList();
+    private SparseBooleanArray states = new SparseBooleanArray();
     Context context;
 
     public RecyclerViewAdapter(List<Element> list, Context context)
@@ -36,11 +39,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
         holder.name.setText(list.get(position).title);
-        //holder.checkbox.setImageResource(list.get(position).checkboxId);
-        holder.image.setImageResource(list.get(position).imageId);
+        holder.image.setImageResource(list.get(position).imageID);
+
+        final Element e = list.get(position);
+        holder.box.setOnCheckedChangeListener(null);
+        holder.box.setSelected(e.isSelected());
+        holder.box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if(isChecked)
+                {
+                    e.setSelected(true);
+                }
+                else
+                {
+                    e.setSelected(false);
+                }
+            }
+        }
+        );
+        holder.box.setChecked(e.isSelected());
 
         //animate(holder);
-
     }
 
     @Override

@@ -28,7 +28,8 @@ public class Main2Activity extends AppCompatActivity {
 
         // Run instances of activities here
         //nit_app_login(); // this initiates with login (main) page, comment out for testing other activities.
-        init_test_fileview();
+        //init_test_fileview();
+        init_app_login();
 
     }
 

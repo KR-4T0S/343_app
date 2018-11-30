@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,8 +33,8 @@ public class FileMenuActivity extends AppCompatActivity
     private Context mContext;
     private Button mAddFileButton;
     private Button mAddFolderButton;
-    private Button mAddDeleteButton;
-    private List<Element> mData = Collections.emptyList();
+    private Button mDeleteButton;
+    private List<Element> mData = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,8 +49,9 @@ public class FileMenuActivity extends AppCompatActivity
 
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
 
-        mData = fill_with_data();
+        //mData = fill_with_data();
 
+        mData = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -61,6 +63,11 @@ public class FileMenuActivity extends AppCompatActivity
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);*/
 
+        controls();
+    }
+
+    public void controls()
+    {
         mAddFileButton = (Button) findViewById(R.id.add_file_button);
         mAddFileButton.setOnClickListener(new View.OnClickListener()
         {
@@ -105,24 +112,42 @@ public class FileMenuActivity extends AppCompatActivity
                 }
                 Log.d("Create File", "File exists?"+new_file.exists());*/
                 int position = 0;
-                mData.add(position, new Element("Test", R.drawable.ic_folder));
+                mData.add(position, new Element("Test", R.drawable.ic_folder, false));
                 mAdapter.notifyItemInserted(position);
                 mRecyclerView.scrollToPosition(position);
             }
         }
         );
 
-        mAddDeleteButton = (Button) findViewById(R.id.delete_folder_button);
-        mAddDeleteButton.setOnClickListener(new View.OnClickListener()
+        mDeleteButton = (Button) findViewById(R.id.delete_folder_button);
+        mDeleteButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Toast.makeText(Main2Activity.this,
-                //                R.string.file_menu_toast,
-                //                Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
-                startActivity(intent);
+                int position = 0;
+                List<Integer> positions = new ArrayList<>();
+
+                for (Element e : mData)
+                {
+                    if (e.isSelected())
+                    {
+                        positions.add(position);
+                    }
+
+                    position++;
+                }
+
+                int dataSize = mData.size();
+
+                for (int i = dataSize - 1; i >= 0; i--)
+                {
+                    if (positions.contains(i))
+                    {
+                        mData.remove(i);
+                        mAdapter.notifyItemRemoved(i);
+                    }
+                }
             }
         }
         );
@@ -133,12 +158,12 @@ public class FileMenuActivity extends AppCompatActivity
 
         List<Element> data = new ArrayList<>();
 
-        data.add(new Element("Batman vs Superman",R.drawable.ic_folder));
-        data.add(new Element("X-Men: Apocalypse", R.drawable.ic_folder));
-        data.add(new Element("Captain America: Civil War", R.drawable.ic_folder));
-        data.add(new Element("Kung Fu Panda 3", R.drawable.ic_file));
-        data.add(new Element("Warcraft", R.drawable.ic_file));
-        data.add(new Element("Alice in Wonderland", R.drawable.ic_file));
+        data.add(new Element("Batman vs Superman", R.drawable.ic_folder, false));
+        data.add(new Element("X-Men: Apocalypse", R.drawable.ic_folder, false));
+        data.add(new Element("Captain America: Civil War", R.drawable.ic_folder, false));
+        data.add(new Element("Kung Fu Panda 3", R.drawable.ic_file, false));
+        data.add(new Element("Warcraft", R.drawable.ic_file, false));
+        data.add(new Element("Alice in Wonderland", R.drawable.ic_file, false));
 
         return data;
     }

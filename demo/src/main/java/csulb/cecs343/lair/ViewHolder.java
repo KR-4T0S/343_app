@@ -9,13 +9,15 @@ import android.widget.TextView;
 
 public class ViewHolder extends RecyclerView.ViewHolder
 {
-    TextView name;
-    ImageView image;
+    public TextView name;
+    public ImageView image;
+    public CheckBox box;
 
     ViewHolder(View itemView)
     {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.name);
         image = (ImageView) itemView.findViewById(R.id.image);
+        box = (CheckBox) itemView.findViewById(R.id.checkbox);
     }
 }
