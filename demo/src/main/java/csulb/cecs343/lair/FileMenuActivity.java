@@ -76,11 +76,48 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                //Toast.makeText(Main2Activity.this,
-                //                R.string.file_menu_toast,
-                //                Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
+                builder.setTitle("Enter The File Name");
+
+                final EditText input = new EditText(FileMenuActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        mInputResult = input.getText().toString();
+
+                        int position = 0;
+
+                        for (Element e : mData)
+                        {
+                            if (!e.isFolder())
+                            {
+                                break;
+                            }
+                            position++;
+                        }
+
+                        String title = mInputResult;
+                        mData.add(position, new Element(title, R.drawable.ic_file, false, false, true));
+                        mAdapter.notifyItemInserted(position);
+                        mRecyclerView.scrollToPosition(position);
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         }
         );
@@ -107,7 +144,7 @@ public class FileMenuActivity extends AppCompatActivity
 
                         int position = 0;
                         String title = mInputResult;
-                        mData.add(position, new Element(title, R.drawable.ic_folder, false));
+                        mData.add(position, new Element(title, R.drawable.ic_folder, false, true, false));
                         mAdapter.notifyItemInserted(position);
                         mRecyclerView.scrollToPosition(position);
                     }
@@ -165,14 +202,31 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position)
             {
-                Toast.makeText(FileMenuActivity.this, "Short Click: " + position, Toast.LENGTH_SHORT).show();
+                if (mData.get(position).isFolder())
+                {
+                    Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(FileMenuActivity.this, "File", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onLongClick(View view, int position)
             {
-                Toast.makeText(FileMenuActivity.this, "Long Click: " + position, Toast.LENGTH_SHORT).show();
+                if (mData.get(position).isFolder())
+                {
+                    Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(FileMenuActivity.this, "File", Toast.LENGTH_SHORT).show();
+                }
             }
-        }));
+        }
+        ));
     }
 }
