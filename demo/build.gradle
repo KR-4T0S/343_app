@@ -36,12 +36,19 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/lukaville/maven"
+    }
+}
+
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:design:$supportLibraryVersion"
     compile project(':library')
     compile project(':dlib')
+    compile 'com.nbsp:library:1.8'
 
     // Tests
     testCompile 'junit:junit:4.12'

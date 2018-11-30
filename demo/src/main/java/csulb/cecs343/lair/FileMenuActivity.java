@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,12 +26,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
+
+import static java.security.AccessController.getContext;
 
 
 public class FileMenuActivity extends AppCompatActivity
@@ -44,12 +53,14 @@ public class FileMenuActivity extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private String mInputResult;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filemenu);
+        textView = (TextView) findViewById(R.id.textView3);
 
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
@@ -76,6 +87,16 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                new MaterialFilePicker()
+                        .withActivity(FileMenuActivity.this)
+                        .withRequestCode(1000)
+                        .withFilter(Pattern.compile(".*\\.jpg$")) // Filtering files and directories by file name using regexp
+                        .withFilterDirectories(true) // Set directories filterable (false by default)
+                        .withHiddenFiles(true) // Show hidden files and folders
+                        .start();
+                //File path = context.getFileDir();
+                //File storeIn = new File(path, "example");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
                 builder.setTitle("Enter The File Name");
 
@@ -128,8 +149,11 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
                 builder.setTitle("Enter The Folder Name");
+
 
                 final EditText input = new EditText(FileMenuActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -228,5 +252,15 @@ public class FileMenuActivity extends AppCompatActivity
             }
         }
         ));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            textView.setText(filePath);
+        }
     }
 }
