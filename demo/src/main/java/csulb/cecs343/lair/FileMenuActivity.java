@@ -159,5 +159,20 @@ public class FileMenuActivity extends AppCompatActivity
             }
         }
         );
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewListenerHelper(this, mRecyclerView, new RecyclerViewItemClickListener()
+        {
+            @Override
+            public void onClick(View view, int position)
+            {
+                Toast.makeText(FileMenuActivity.this, "Short Click: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position)
+            {
+                Toast.makeText(FileMenuActivity.this, "Long Click: " + position, Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
 }
