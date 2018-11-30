@@ -52,16 +52,11 @@ public class FileMenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_filemenu);
 
         mContext = getApplicationContext();
-
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
-
-        //mData = fill_with_data();
-
         mData = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         //mLayoutManager.setAutoMeasureEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         mAdapter = new RecyclerViewAdapter(mData, mContext);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -96,31 +91,6 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                //Toast.makeText(Main2Activity.this,
-                //                R.string.file_menu_toast,
-                //                Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
-                //startActivity(intent);
-                //Button button = (Button) v;
-                //((Button) v).setText("clicked");
-
-                /*ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                File directory = cw.getDir("themes", Context.MODE_WORLD_WRITEABLE);
-
-                File new_file =new File(directory.getAbsolutePath() + File.separator +  "folder_icon.png");
-                try
-                {
-                    new_file.createNewFile();
-                }
-                catch (IOException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                Log.d("Create File", "File exists?"+new_file.exists());*/
-
-                //String folderName = "";
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
                 builder.setTitle("Enter The Folder Name");
 
