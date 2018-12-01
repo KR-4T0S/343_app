@@ -50,11 +50,14 @@ public class TrainModelActivity extends AppCompatActivity {
     private File destination = null;
     private String imgPath = null;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
+    DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
+        myDB = new DatabaseHelper(this);
 
         btn_select_image = (Button)findViewById(R.id.btn_select_image);
         btn_add = (Button)findViewById(R.id.btn_add);
@@ -122,9 +125,10 @@ public class TrainModelActivity extends AppCompatActivity {
                 case R.id.btn_add:
                     String targetPath = Constants.getDLibImageDirectoryPath() + "/" + et_name.getText().toString() + ".jpg";
                     FileUtils.copyFile(imgPath,targetPath);
-                    Intent i = new Intent(TrainModelActivity.this,LoginActivity.class);
-                    startActivity(i);
+                    Intent i = new Intent(TrainModelActivity.this, Main2Activity.class);
+                    //    startActivity(i);
                     finish();
+                    myDB.updateModelTrained("1");
                     break;
             }
         }

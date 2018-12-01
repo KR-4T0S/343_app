@@ -55,6 +55,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateModelTrained(String one){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_3, one);
+        db.update(TABLE_NAME,contentValues, "ID = ?", new String[]{"1"});
+        return true;
+    }
+
+
     public boolean insertData(String pincode, boolean userTrained, Integer failedFacialIndentification, Integer failedPincodeIdentification){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -82,7 +91,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-
+    public String random_test(){
+        String r = "whatever";
+        return r;
+    }
 
     public String getPincode(){
         String pincode = "";
