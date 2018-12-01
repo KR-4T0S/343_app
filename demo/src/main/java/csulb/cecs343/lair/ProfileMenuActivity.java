@@ -12,6 +12,7 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
     private Button mLogOutButton;
     private Button mUpdatePincodeButton;
     private Button mDeleteProfileButton;
+    private Button mUpdateFacialRecognitionButton;
     DatabaseHelper myDB;
 
 
@@ -27,10 +28,12 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
         mUpdatePincodeButton = (Button)findViewById(R.id.update_pincode_button);
         mLogOutButton = (Button)findViewById(R.id.log_out_button);
         mDeleteProfileButton = (Button)findViewById(R.id.delete_profile_button);
+        mUpdatePincodeButton = (Button)findViewById(R.id.update_facial_recognition_button);
 
         mUpdatePincodeButton.setOnClickListener(this);
         mLogOutButton.setOnClickListener(this);
         mDeleteProfileButton.setOnClickListener(this);
+        mUpdatePincodeButton.setOnClickListener(this);
 
     }
 
@@ -52,6 +55,10 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
                 Intent delete = new Intent(ProfileMenuActivity.this,  Main2Activity.class);
                 startActivity(delete);
                 Toast.makeText(this, "Your profile was deleted" , Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.update_facial_recognition_button:
+                Intent rec = new Intent(ProfileMenuActivity.this,  TrainModelActivity.class);
+                startActivity(rec);
                 break;
         }
     }
