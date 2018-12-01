@@ -60,7 +60,8 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_file_view"
             android:theme="@style/Theme.Demo" />
-        <activity android:name=".ProfileMenuActivity"></activity>
+        <activity android:name=".ProfileMenuActivity" />
+        <activity android:name=".UserAuthenticationActivity"></activity>
     </application>
 
 </manifest>

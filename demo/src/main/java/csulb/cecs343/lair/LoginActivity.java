@@ -305,7 +305,13 @@ public class LoginActivity extends AppCompatActivity implements
         if (names.isEmpty()) {
             msg = "No face detected or Unknown person";
             myDB.updateFailedRec(myDB.getFailedRec() + 1);
-            Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
+           // int num = (myDB.getFailedRec() + 1);
+         //   Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
+
+            if (myDB.getFailedRec() >= 4){
+                Toast.makeText(this, "Facial Recognition failed 3 times in a row. Enter PINCODE to reset facial recognition model!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(LoginActivity.this, UserAuthenticationActivity.class);
+            }
 
 
         } else {
@@ -315,7 +321,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
             msg+=" found!";
             myDB.updateFailedRec(0);
-            Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
         }
         return msg;
     }
