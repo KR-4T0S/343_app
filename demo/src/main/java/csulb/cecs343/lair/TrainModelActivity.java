@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -32,6 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,11 +50,14 @@ public class TrainModelActivity extends AppCompatActivity {
     private File destination = null;
     private String imgPath = null;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
+    DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
+        myDB = new DatabaseHelper(this);
 
         btn_select_image = (Button)findViewById(R.id.btn_select_image);
         btn_add = (Button)findViewById(R.id.btn_add);
@@ -61,6 +67,7 @@ public class TrainModelActivity extends AppCompatActivity {
         btn_select_image.setOnClickListener(mOnClickListener);
         btn_add.setOnClickListener(mOnClickListener);
         btn_add.setEnabled(false);
+        checkPermissions();
 
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,6 +89,27 @@ public class TrainModelActivity extends AppCompatActivity {
         destination = new File(Constants.getDLibDirectoryPath() + "/temp.jpg");
     }
 
+    String[] permissions = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+
+    private boolean checkPermissions() {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : permissions) {
+            result = ContextCompat.checkSelfPermission(this, p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 100);
+            return false;
+        }
+        return true;
+    }
+
     public void enableSubmitIfReady() {
         boolean isReady = et_name.getText().toString().length() > 0 && imgPath!=null;
         btn_add.setEnabled(isReady);
@@ -97,9 +125,10 @@ public class TrainModelActivity extends AppCompatActivity {
                 case R.id.btn_add:
                     String targetPath = Constants.getDLibImageDirectoryPath() + "/" + et_name.getText().toString() + ".jpg";
                     FileUtils.copyFile(imgPath,targetPath);
-                    Intent i = new Intent(TrainModelActivity.this,LoginActivity.class);
+                    Intent i = new Intent(TrainModelActivity.this, Main2Activity.class);
                     startActivity(i);
                     finish();
+                    myDB.updateModelTrained("1");
                     break;
             }
         }
