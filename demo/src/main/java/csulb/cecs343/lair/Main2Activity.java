@@ -128,4 +128,6 @@ public class Main2Activity extends AppCompatActivity {
 
         startActivity(fileview);
     }
+    @Override
+    public void onBackPressed() {}
 }
