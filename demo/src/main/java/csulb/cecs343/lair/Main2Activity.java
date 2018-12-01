@@ -27,9 +27,8 @@ public class Main2Activity extends AppCompatActivity {
         // init_test_filedb(); // test file db
 
         // Run instances of activities here
-        //nit_app_login(); // this initiates with login (main) page, comment out for testing other activities.
+        init_app_login(); // this initiates with login (main) page, comment out for testing other activities.
         //init_test_fileview();
-        init_app_login();
 
     }
 
@@ -95,12 +94,22 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void init_test_fileview() {
-        String fileSource = "/storage/files/6334029+_8dc9b60846f726cf2c09446db693f156.jpg";
-        String fileName = "Test Image";
+        // Test Image
+//        String fileSource = "/data/data/com.google.android.cameraview.demo/files/kHPxj2F.jpg";
+//        String fileName = "Test Image";
+//        Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
+//        fileview.putExtra("fileSource", fileSource);
+//        fileview.putExtra("fileName", fileName);
+//        fileview.putExtra("type", FileViewActivity.IMAGE);
+
+        // Test Video
+        String vidSource = "/data/data/com.google.android.cameraview.demo/files/infinite dab.mp4";
+        String vidName = "Infinite Dab";
         Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
-        fileview.putExtra("fileSource", fileSource);
-        fileview.putExtra("fileName", fileName);
-        fileview.putExtra("type", FileViewActivity.IMAGE);
+        fileview.putExtra("fileSource", vidSource);
+        fileview.putExtra("fileName", vidName);
+        fileview.putExtra("type", FileViewActivity.VIDEO);
+
         startActivity(fileview);
     }
 }
