@@ -60,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String TAG = "MainActivity";
     private static final int INPUT_SIZE = 500;
 
+    DatabaseHelper myDB;
+
     private static final int[] FLASH_OPTIONS = {
             CameraView.FLASH_AUTO,
             CameraView.FLASH_OFF,
@@ -108,6 +110,8 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermissions();
+
+        myDB = new DatabaseHelper(this);
 
         mCameraView = (CameraView) findViewById(R.id.camera);
         if (mCameraView != null) {
@@ -300,6 +304,9 @@ public class LoginActivity extends AppCompatActivity implements
         String msg = new String();
         if (names.isEmpty()) {
             msg = "No face detected or Unknown person";
+            myDB.updateFailedRec(myDB.getFailedRec() + 1);
+            Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
+
 
         } else {
             for(int i=0; i<names.size(); i++) {
@@ -307,6 +314,8 @@ public class LoginActivity extends AppCompatActivity implements
                 if (i!=names.size()-1) msg+=", ";
             }
             msg+=" found!";
+            myDB.updateFailedRec(0);
+            Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
         }
         return msg;
     }

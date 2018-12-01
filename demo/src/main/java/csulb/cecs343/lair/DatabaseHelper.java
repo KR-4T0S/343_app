@@ -63,6 +63,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateFailedRec(int one){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_4, one);
+        db.update(TABLE_NAME,contentValues, "ID = ?", new String[]{"1"});
+        return true;
+    }
+
 
     public boolean insertData(String pincode, boolean userTrained, Integer failedFacialIndentification, Integer failedPincodeIdentification){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -133,6 +141,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         res.close();
         return trained;
     }
+
+    public Integer getFailedRec() {
+        String trained = "";
+        SQLiteDatabase dber = this.getReadableDatabase();
+
+        Cursor res = getResCount();
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            //          buffer.append("Id : " + res.getString(0) + "\n");
+            //buffer.append("pincode : " + res.getString(1));
+           // buffer.append(res.getString(2));
+                     buffer.append(res.getString(3));
+            //          buffer.append("FailedPin : " + res.getString(3) + "\n");
+        }
+        Integer num = new Integer(0);
+
+        num = Integer.parseInt(buffer.toString());
+      //  trained = buffer.toString();
+        res.close();
+        return num;
+    }
+
     public void deleteDB(Context mContext) {
         try {
             mContext.deleteDatabase(DATABASE_NAME);
