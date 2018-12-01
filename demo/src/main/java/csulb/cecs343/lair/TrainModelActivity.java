@@ -126,7 +126,7 @@ public class TrainModelActivity extends AppCompatActivity {
                     String targetPath = Constants.getDLibImageDirectoryPath() + "/" + et_name.getText().toString() + ".jpg";
                     FileUtils.copyFile(imgPath,targetPath);
                     Intent i = new Intent(TrainModelActivity.this, Main2Activity.class);
-                    //    startActivity(i);
+                    startActivity(i);
                     finish();
                     myDB.updateModelTrained("1");
                     break;
