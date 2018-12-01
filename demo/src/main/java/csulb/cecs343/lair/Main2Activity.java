@@ -76,7 +76,7 @@ public class Main2Activity extends AppCompatActivity {
         // START Initiate db //
         FileDatabaseHelper db = new FileDatabaseHelper(this);
         db.getWritableDatabase(); // THIS IS REQUIRED
-        // END Inidiate db //
+        // END Initiate db //
 
         db.addFolder("ROOT", "/", "");
         db.addFolder("videos", "/root","1");
