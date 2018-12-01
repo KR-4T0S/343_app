@@ -53,4 +53,9 @@
     <string name="add_file_button">+FILE</string>
     <string name="add_folder_button">+FOLDER</string>
     <string name="del_file">-</string>
+    <string name="profile_menu_button">PROFILE MENU</string>
+    <string name="log_out_button">LOG OUT</string>
+    <string name="update_pincode_button">UPDATE PINCODE</string>
+    <string name="update_facial_recognition_button">UPDATE FACIAL RECOGNITION</string>
+    <string name="delete_profile_button">DELETE PROFILE</string>
 </resources>

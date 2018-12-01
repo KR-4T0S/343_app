@@ -16,6 +16,7 @@ public class Main2Activity extends AppCompatActivity {
     private Button mLoginButton;
     private Button mCreateProfileButton;
     private Button mFileMenuButton;
+    private Button mProfileMenu;
 
     //random comment
 
@@ -36,6 +37,21 @@ public class Main2Activity extends AppCompatActivity {
     // Place all your testing here,
     private void init_app_login(){
         setContentView(R.layout.activity_main2);
+
+
+        setContentView(R.layout.activity_main2);
+        mProfileMenu = (Button)findViewById(R.id.profile_menu_button);
+        mProfileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Does nothing yet, but soon!
+
+                Intent profile = new Intent(Main2Activity.this, ProfileMenuActivity.class);
+                startActivity(profile);
+            }
+        });
+
+
 
         mLoginButton = (Button)findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new View.OnClickListener() {

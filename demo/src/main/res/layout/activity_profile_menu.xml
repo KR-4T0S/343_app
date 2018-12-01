@@ -7,31 +7,35 @@
     android:orientation="vertical"
     android:gravity="center">
 
+
+
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/log_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/login_button" />
+        android:text="@string/log_out_button" />
 
     <Button
-        android:id="@+id/create_profile_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/create_profile_button"/>
-
-    <Button
-        android:id="@+id/file_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/file_menu_button" />
-
-    <Button
-        android:id="@+id/profile_menu_button"
+        android:id="@+id/update_pincode_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/profile_menu_button" />
+        android:text="@string/update_pincode_button" />
+
+    <Button
+        android:id="@+id/update_facial_recognition_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/update_facial_recognition_button" />
+
+    <Button
+        android:id="@+id/delete_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/delete_profile_button" />
+
 
 </LinearLayout>
