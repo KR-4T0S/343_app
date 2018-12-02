@@ -149,11 +149,8 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
                 builder.setTitle("Enter The Folder Name");
-
 
                 final EditText input = new EditText(FileMenuActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -226,7 +223,7 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position)
             {
-                if (mData.get(position).isFolder())
+/*                if (mData.get(position).isFolder())
                 {
                     Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
                     startActivity(intent);
@@ -234,7 +231,9 @@ public class FileMenuActivity extends AppCompatActivity
                 else
                 {
                     Toast.makeText(FileMenuActivity.this, "File", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+
+                // Do nothing for now, temp solution?
             }
 
             @Override
