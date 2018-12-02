@@ -19,7 +19,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context="com.google.android.cameraview.demo.AddPerson">
+    tools:context="com.google.android.cameraview.demo.AddPerson"
+    android:gravity="center_vertical"
+    android:background="#333">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,14 +33,13 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text"
-            android:hint="Name"
-            android:textSize="14dp"
-            android:paddingLeft="5dp"
             android:gravity="center_vertical"
-            android:textColorHint="@color/black_semi_transparent"
-            android:textColor="#000"
-            />
+            android:hint="Name"
+            android:inputType="text"
+            android:paddingLeft="5dp"
+            android:textColor="@android:color/background_light"
+            android:textColorHint="#c9c9c9"
+            android:textSize="14dp" />
 
     </LinearLayout>
 
@@ -49,27 +50,26 @@
         android:orientation="horizontal">
 
 
-
         <EditText
             android:id="@+id/et_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:inputType="number"
-            android:hint="Select Image"
-            android:textSize="14dp"
-            android:paddingLeft="5dp"
             android:layout_weight="0.9"
-            android:gravity="center_vertical"
             android:focusable="false"
-            android:textColorHint="@color/black_semi_transparent"
-            android:textColor="#000"
-            />
+            android:gravity="center_vertical"
+            android:hint="Select Image"
+            android:inputType="number"
+            android:paddingLeft="5dp"
+            android:textColorHint="#c9c9c9"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
         <Button
+            android:id="@+id/btn_select_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_select_image"
-            android:backgroundTint="@color/transparent_white_hex_8"
-            android:text="Browse"/>
+            android:background="@color/primaryDark"
+            android:text="Browse"
+            android:textColor="@android:color/background_light" />
 
 
     </LinearLayout>
@@ -78,12 +78,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
+
         <Button
+            android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_add"
-            android:backgroundTint="@color/transparent_white_hex_8"
-            android:text="Add"/>
+            android:backgroundTint="@color/primaryDark"
+            android:text="Add"
+            android:textColor="@android:color/background_light" />
     </LinearLayout>
 
 </LinearLayout>
