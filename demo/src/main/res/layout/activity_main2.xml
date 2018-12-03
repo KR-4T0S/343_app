@@ -35,4 +35,10 @@
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/file_menu_button"
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:text="File Menu" />
+
 </LinearLayout>

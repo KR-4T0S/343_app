@@ -38,6 +38,16 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        mFileMenuButton = (Button) findViewById(R.id.file_menu_button);
+        mFileMenuButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Main2Activity.this, FileMenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

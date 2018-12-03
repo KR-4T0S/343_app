@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -62,6 +63,7 @@ public class FileMenuActivity extends AppCompatActivity
     TextView textView;
     private final List<String> IMAGE_EXTENSIONS = new ArrayList<>(Arrays.asList("jpg", "png", "gif", "jpeg", "tiff"));
     private final List<String> VIDEO_EXTENSIONS = new ArrayList<>(Arrays.asList("mp4", "3gp", "ts", "webm", "mkv"));
+    private FileDatabaseHelper db = new FileDatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,6 +71,8 @@ public class FileMenuActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filemenu);
         textView = (TextView) findViewById(R.id.textView3);
+        db.getWritableDatabase();
+        db.addFolder("root", "/", "");
 
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
@@ -109,50 +113,6 @@ public class FileMenuActivity extends AppCompatActivity
                         //.withFilterDirectories(true) // Set directories filterable (false by default)
                         .withHiddenFiles(true) // Show hidden files and folders
                         .start();
-
-                //AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
-                //builder.setTitle("Enter The File Name");
-
-                //final EditText input = new EditText(FileMenuActivity.this);
-                //input.setInputType(InputType.TYPE_CLASS_TEXT);
-                //builder.setView(input);
-
-                /*builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        mInputResult = input.getText().toString();
-
-                        int position = 0;
-
-                        for (Element e : mData)
-                        {
-                            if (!e.isFolder())
-                            {
-                                break;
-                            }
-                            position++;
-                        }
-
-                        String title = mInputResult;
-                        mData.add(position, new Element(title, R.drawable.ic_file, false, false, true));
-                        mAdapter.notifyItemInserted(position);
-                        mRecyclerView.scrollToPosition(position);
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.cancel();
-                    }
-                });
-                */
-
-                //builder.show();
             }
         }
         );
@@ -182,6 +142,7 @@ public class FileMenuActivity extends AppCompatActivity
                         mData.add(position, new Element(title, "", 0, R.drawable.ic_folder_purple, false, true, false));
                         mAdapter.notifyItemInserted(position);
                         mRecyclerView.scrollToPosition(position);
+                        db.addFolder(title, "/root", "1");
                     }
                 });
 
@@ -205,29 +166,7 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                int position = 0;
-                List<Integer> positions = new ArrayList<>();
-
-                for (Element e : mData)
-                {
-                    if (e.isSelected())
-                    {
-                        positions.add(position);
-                    }
-
-                    position++;
-                }
-
-                int dataSize = mData.size();
-
-                for (int i = dataSize - 1; i >= 0; i--)
-                {
-                    if (positions.contains(i))
-                    {
-                        mData.remove(i);
-                        mAdapter.notifyItemRemoved(i);
-                    }
-                }
+                deleteElements();
             }
         }
         );
@@ -276,12 +215,14 @@ public class FileMenuActivity extends AppCompatActivity
 
             int fileType = 0;
             String ext = "";
+            String name = "";
 
             int position = mData.size();
             int i = fileName.lastIndexOf('.');
             if (i > 0)
             {
                 ext = fileName.substring(i + 1);
+                name = fileName.substring(0, i);
             }
 
             if (VIDEO_EXTENSIONS.contains(ext))
@@ -295,9 +236,77 @@ public class FileMenuActivity extends AppCompatActivity
                 mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file_image, false, false, true));
             }
 
+            db.addFile(name, ext, "/root", "1");
 
             mAdapter.notifyItemInserted(position);
             mRecyclerView.scrollToPosition(position);
+        }
+    }
+
+    public void deleteElements()
+    {
+        int position = 0;
+        List<Integer> positions = new ArrayList<>();
+        List<String> folderIDsToDelete = new ArrayList<>();
+        List<String> fileIDsToDelete = new ArrayList<>();
+        HashMap<String, String> folderIds = new HashMap<String, String>();
+        HashMap<String, String> fileIds = new HashMap<String, String>();
+
+        List<String> folders = db.getChildrenFolders("1");
+
+        for (String folder : folders)
+        {
+            String splitResult[] = folder.split("\\|");
+            folderIds.put(splitResult[1], splitResult[0]);
+        }
+
+        List<String> files = db.getChildrenFiles("1");
+
+        for (String file : files)
+        {
+            String splitResult[] = file.split("\\|");
+            String filename = splitResult[2] + "." + splitResult[3];
+            fileIds.put(filename, splitResult[0]);
+        }
+
+        for (Element e : mData)
+        {
+            if (e.isSelected())
+            {
+                positions.add(position);
+
+                if (e.isFolder())
+                {
+                    folderIDsToDelete.add(folderIds.get(e.title));
+                }
+                else
+                {
+                    fileIDsToDelete.add(fileIds.get(e.title));
+                }
+            }
+
+            position++;
+        }
+
+        int dataSize = mData.size();
+
+        for (int i = dataSize - 1; i >= 0; i--)
+        {
+            if (positions.contains(i))
+            {
+                mData.remove(i);
+                mAdapter.notifyItemRemoved(i);
+            }
+        }
+
+        for (String id : folderIDsToDelete)
+        {
+            db.deleteFolder(id);
+        }
+
+        for (String id : fileIDsToDelete)
+        {
+            db.deleteFile(id);
         }
     }
 
@@ -318,4 +327,7 @@ public class FileMenuActivity extends AppCompatActivity
                 }
         }
     }
+
+/*    @Override
+    public void onBackPressed() {}*/
 }
