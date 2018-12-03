@@ -38,12 +38,14 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import static java.security.AccessController.getContext;
+
 
 
 public class FileMenuActivity extends AppCompatActivity
@@ -58,6 +60,8 @@ public class FileMenuActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private String mInputResult;
     TextView textView;
+    private final List<String> IMAGE_EXTENSIONS = new ArrayList<>(Arrays.asList("jpg", "png"));
+    private final List<String> VIDEO_EXTENSIONS = new ArrayList<>(Arrays.asList("mp4"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -175,7 +179,7 @@ public class FileMenuActivity extends AppCompatActivity
 
                         int position = 0;
                         String title = mInputResult;
-                        mData.add(position, new Element(title, R.drawable.ic_folder, false, true, false));
+                        mData.add(position, new Element(title, "", 0, R.drawable.ic_folder, false, true, false));
                         mAdapter.notifyItemInserted(position);
                         mRecyclerView.scrollToPosition(position);
                     }
@@ -233,16 +237,6 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position)
             {
-/*                if (mData.get(position).isFolder())
-                {
-                    Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
-                    startActivity(intent);
-                }
-                else
-                {
-                    Toast.makeText(FileMenuActivity.this, "File", Toast.LENGTH_SHORT).show();
-                }*/
-
                 // Do nothing for now, temp solution?
             }
 
@@ -256,7 +250,14 @@ public class FileMenuActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(FileMenuActivity.this, "File", Toast.LENGTH_SHORT).show();
+                    Element e = mData.get(position);
+
+                    Intent fileView = new Intent(FileMenuActivity.this, FileViewActivity.class);
+                    fileView.putExtra("fileSource", e.path);
+                    fileView.putExtra("fileName", e.title);
+                    fileView.putExtra("type", e.type);
+
+                    startActivity(fileView);
                 }
             }
         }
@@ -264,24 +265,45 @@ public class FileMenuActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1000 && resultCode == RESULT_OK) {
+        if (requestCode == 1000 && resultCode == RESULT_OK)
+        {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            String filename= filePath.substring(filePath.lastIndexOf("/")+1);
+            String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
             File path = getFilesDir();
             File storeIn = new File(path, filePath);
-            int position = 0;
-            mData.add(position, new Element(filename, R.drawable.ic_file, false, true, false));
+
+            int fileType = 0;
+            String ext = "";
+
+            int i = fileName.lastIndexOf('.');
+            if (i > 0)
+            {
+                ext = fileName.substring(i + 1);
+            }
+
+            if (VIDEO_EXTENSIONS.contains(ext))
+            {
+                fileType = 1;
+            }
+            else
+            {
+                fileType = 0;
+            }
+
+            int position = mData.size();
+            mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file, false, false, true));
             mAdapter.notifyItemInserted(position);
             mRecyclerView.scrollToPosition(position);
-
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         switch (requestCode)
         {
             case 1001:
