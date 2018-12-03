@@ -16,10 +16,10 @@ public class FileViewActivity extends AppCompatActivity {
     private static final String TAG = "FileViewActivity";
     public static int VIDEO = 1;
     public static int IMAGE = 0;
-    ImageView imgView;
-    VideoView vidView;
-    TextView textView;
-    MediaController mediaController;
+    private ImageView imgView;
+    private VideoView vidView;
+    private TextView textView;
+    private MediaController mediaController;
     private int type;
     private String fileSource;
     private String fileName;

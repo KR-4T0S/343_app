@@ -5,16 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity {
 
     private Button mLoginButton;
     private Button mCreateProfileButton;
-    private Button mFileMenuButton;
-    private Button mProfileMenu;
-
-    //random comment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +41,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        //TODO: nothing, or maybe something?
+    }
 }

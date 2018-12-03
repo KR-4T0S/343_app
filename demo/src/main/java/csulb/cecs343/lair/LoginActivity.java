@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String TAG = "MainActivity";
     private static final int INPUT_SIZE = 500;
 
-    DatabaseHelper myDB;
+    private DatabaseHelper myDB;
 
     private static final int[] FLASH_OPTIONS = {
             CameraView.FLASH_AUTO,

@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#333333"
     android:orientation="vertical"
     android:gravity="center">
 
     <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/login_button" />
+        android:id="@+id/create_profile_button"
+        android:layout_width="119dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/secondaryDark"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/create_profile_button"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/create_profile_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/create_profile_button"/>
+        android:id="@+id/login_button"
+        android:layout_width="181dp"
+        android:layout_height="77dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/primaryDark"
+        android:padding="5dp"
+        android:text="@string/login_button"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
