@@ -95,11 +95,11 @@ public class LoginActivity extends AppCompatActivity implements
                         mCameraView.takePicture();
                     }
                     break;
-    //            case R.id.add_person:
-    //                Intent i = new Intent(LoginActivity.this, AddPerson.class);
-    //                startActivity(i);
-    //                finish();
-    //                break;
+                //            case R.id.add_person:
+                //                Intent i = new Intent(LoginActivity.this, AddPerson.class);
+                //                startActivity(i);
+                //                finish();
+                //                break;
             }
         }
     };
@@ -108,10 +108,13 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate called");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        checkPermissions();
+        //   setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         myDB = new DatabaseHelper(this);
+        checkProfileExists();
+
+        //checkPermissions();
 
         mCameraView = (CameraView) findViewById(R.id.camera);
         if (mCameraView != null) {
@@ -121,10 +124,10 @@ public class LoginActivity extends AppCompatActivity implements
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
         }
-      //  Button add_person = (Button) findViewById(R.id.add_person);
-      //  if (add_person != null) {
-      //      add_person.setOnClickListener(mOnClickListener);
-      //  }
+        //  Button add_person = (Button) findViewById(R.id.add_person);
+        //  if (add_person != null) {
+        //      add_person.setOnClickListener(mOnClickListener);
+        //  }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -178,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements
                 //Log.d(TAG, "error in setting dlib_rec_example directory");
             }
             mFaceRec = new FaceRec(Constants.getDLibDirectoryPath());
-            changeProgressDialogMessage(dialog, "Adding people...");
+            changeProgressDialogMessage(dialog, "Starting...");
             mFaceRec.train();
             return null;
         }
@@ -305,8 +308,8 @@ public class LoginActivity extends AppCompatActivity implements
         if (names.isEmpty()) {
             msg = "No face detected or Unknown person";
             myDB.updateFailedRec(myDB.getFailedRec() + 1);
-           // int num = (myDB.getFailedRec() + 1);
-         //   Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
+            // int num = (myDB.getFailedRec() + 1);
+            //   Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
 
             if (myDB.getFailedRec() >= 4){
                 Toast.makeText(this, "Facial Recognition failed 3 times in a row. Enter PINCODE to reset facial recognition model!", Toast.LENGTH_SHORT).show();
@@ -322,7 +325,9 @@ public class LoginActivity extends AppCompatActivity implements
             }
             msg+=" found!";
             myDB.updateFailedRec(0);
-       //     Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
+            Intent m = new Intent(LoginActivity.this, ProfileMenuActivity.class);
+            startActivity(m);
+            //     Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
         }
         return msg;
     }
@@ -445,7 +450,7 @@ public class LoginActivity extends AppCompatActivity implements
         private static final String ARG_NOT_GRANTED_MESSAGE = "not_granted_message";
 
         public static LoginActivity.ConfirmationDialogFragment newInstance(@StringRes int message,
-                                                                                                             String[] permissions, int requestCode, @StringRes int notGrantedMessage) {
+                                                                           String[] permissions, int requestCode, @StringRes int notGrantedMessage) {
             LoginActivity.ConfirmationDialogFragment fragment = new LoginActivity.ConfirmationDialogFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_MESSAGE, message);
@@ -488,4 +493,13 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
+    public void checkProfileExists(){
+        if ((myDB.getPincode().equals("")) || (myDB.getUserTrained().equals("0"))){
+            Toast.makeText(this, "You need to create profile!", Toast.LENGTH_SHORT).show();
+            Intent pin = new Intent(LoginActivity.this, Main2Activity.class);
+            startActivity(pin);
+        }else{
+            checkPermissions();
+        }
+    }
 }

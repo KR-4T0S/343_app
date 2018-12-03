@@ -13,10 +13,10 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
     private Button mUpdatePincodeButton;
     private Button mDeleteProfileButton;
     private Button mUpdateFacialRecognitionButton;
+    private Button mFile2MenuButton;
+
     DatabaseHelper myDB;
-
-
-
+    FileDatabaseHelper myFDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +24,19 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_profile_menu);
 
         myDB = new DatabaseHelper(this);
+        myFDB = new FileDatabaseHelper(this);
 
         mUpdatePincodeButton = (Button)findViewById(R.id.update_pincode_button);
         mLogOutButton = (Button)findViewById(R.id.log_out_button);
         mDeleteProfileButton = (Button)findViewById(R.id.delete_profile_button);
-        mUpdatePincodeButton = (Button)findViewById(R.id.update_facial_recognition_button);
+        mUpdateFacialRecognitionButton = (Button)findViewById(R.id.update_facial_recognition_button);
+        mFile2MenuButton = (Button)findViewById(R.id.file2_menu_button);
 
         mUpdatePincodeButton.setOnClickListener(this);
         mLogOutButton.setOnClickListener(this);
         mDeleteProfileButton.setOnClickListener(this);
-        mUpdatePincodeButton.setOnClickListener(this);
-
+        mUpdateFacialRecognitionButton.setOnClickListener(this);
+        mFile2MenuButton.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +53,8 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.delete_profile_button:
                 myDB.deleteDB(this);
+                myFDB.deleteDB(this);
+                myFDB.close();
                 myDB.close();
                 Intent delete = new Intent(ProfileMenuActivity.this,  Main2Activity.class);
                 startActivity(delete);
@@ -59,6 +63,10 @@ public class ProfileMenuActivity extends AppCompatActivity implements View.OnCli
             case R.id.update_facial_recognition_button:
                 Intent rec = new Intent(ProfileMenuActivity.this,  TrainModelActivity.class);
                 startActivity(rec);
+                break;
+            case R.id.file2_menu_button:
+                Intent fil = new Intent(ProfileMenuActivity.this,  FileMenuActivity.class);
+                startActivity(fil);
                 break;
         }
     }

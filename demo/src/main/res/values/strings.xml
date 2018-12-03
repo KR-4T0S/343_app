@@ -39,8 +39,8 @@
     <string name="eight_button">8</string>
     <string name="nine_button">9</string>
     <string name="zero_button">0</string>
-    <string name="confirm_button">CONFIRM</string>
-    <string name="new_pincode_button">NEW PINCODE</string>
+    <string name="confirm_button">ENTER</string>
+    <string name="new_pincode_button">CLEAR</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
     <string name="title_activity_pincode">PincodeActivity</string>
@@ -58,4 +58,6 @@
     <string name="update_pincode_button">UPDATE PINCODE</string>
     <string name="update_facial_recognition_button">UPDATE FACIAL RECOGNITION</string>
     <string name="delete_profile_button">DELETE PROFILE</string>
+    <string name="file2_menu_button">FILE MENU</string>
+    <string name="clear_button">CLEAR</string>
 </resources>

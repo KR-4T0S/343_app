@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //show message
             insertData("",false,0,0);
         }
+        res.close();
     }
 
     public Cursor getResCount(){
@@ -63,10 +64,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateFailedRec(int one){
+    public boolean updateFailedRec(int num){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_4, one);
+        contentValues.put(COL_4, num);
+        db.update(TABLE_NAME,contentValues, "ID = ?", new String[]{"1"});
+        return true;
+    }
+
+    public boolean updateFailedPin(int num){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_5, num);
         db.update(TABLE_NAME,contentValues, "ID = ?", new String[]{"1"});
         return true;
     }
@@ -151,14 +160,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (res.moveToNext()) {
             //          buffer.append("Id : " + res.getString(0) + "\n");
             //buffer.append("pincode : " + res.getString(1));
-           // buffer.append(res.getString(2));
-                     buffer.append(res.getString(3));
+            // buffer.append(res.getString(2));
+            buffer.append(res.getString(3));
             //          buffer.append("FailedPin : " + res.getString(3) + "\n");
         }
         Integer num = new Integer(0);
 
         num = Integer.parseInt(buffer.toString());
-      //  trained = buffer.toString();
+        //  trained = buffer.toString();
+        res.close();
+        return num;
+    }
+
+    public Integer getFailedPin() {
+        String trained = "";
+        SQLiteDatabase dber = this.getReadableDatabase();
+
+        Cursor res = getResCount();
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            //          buffer.append("Id : " + res.getString(0) + "\n");
+            //buffer.append("pincode : " + res.getString(1));
+            // buffer.append(res.getString(2));
+            //   buffer.append(res.getString(3));
+            buffer.append(res.getString(4));
+        }
+        Integer num = new Integer(0);
+
+        num = Integer.parseInt(buffer.toString());
+        //  trained = buffer.toString();
         res.close();
         return num;
     }

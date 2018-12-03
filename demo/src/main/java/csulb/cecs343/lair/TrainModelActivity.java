@@ -55,7 +55,8 @@ public class TrainModelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_person);
+        //   setContentView(R.layout.activity_add_person);
+        setContentView(R.layout.activity_train_model);
 
         myDB = new DatabaseHelper(this);
 
@@ -274,5 +275,5 @@ public class TrainModelActivity extends AppCompatActivity {
 
         }
     }
-
+    public void onBackPressed() {}
 }
