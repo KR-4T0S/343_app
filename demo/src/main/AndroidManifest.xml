@@ -32,10 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AddPerson"
-            android:label="@string/title_activity_add_person"
-            android:theme="@style/Theme.Demo.NoActionBar" />
+
         <activity
             android:name=".CreateProfileActivity"
             android:label="@string/title_activity_create_profile"
