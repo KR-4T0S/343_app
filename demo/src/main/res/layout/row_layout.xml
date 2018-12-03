@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/file_menu_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="#333">
 
     <ImageView
         android:id="@+id/image"
@@ -19,7 +21,7 @@
         android:layout_marginRight="5dp"
         android:layout_weight="100"
         android:text="Folder Test"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="14sp" />
 
     <CheckBox

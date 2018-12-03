@@ -179,7 +179,7 @@ public class FileMenuActivity extends AppCompatActivity
 
                         int position = 0;
                         String title = mInputResult;
-                        mData.add(position, new Element(title, "", 0, R.drawable.ic_folder, false, true, false));
+                        mData.add(position, new Element(title, "", 0, R.drawable.ic_folder_purple, false, true, false));
                         mAdapter.notifyItemInserted(position);
                         mRecyclerView.scrollToPosition(position);
                     }
@@ -273,12 +273,11 @@ public class FileMenuActivity extends AppCompatActivity
         {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
-            //File path = getFilesDir();
-            //File storeIn = new File(path, filePath);
 
             int fileType = 0;
             String ext = "";
 
+            int position = mData.size();
             int i = fileName.lastIndexOf('.');
             if (i > 0)
             {
@@ -288,14 +287,15 @@ public class FileMenuActivity extends AppCompatActivity
             if (VIDEO_EXTENSIONS.contains(ext))
             {
                 fileType = 1;
+                mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file_video, false, false, true));
             }
             else
             {
                 fileType = 0;
+                mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file_image, false, false, true));
             }
 
-            int position = mData.size();
-            mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file, false, false, true));
+
             mAdapter.notifyItemInserted(position);
             mRecyclerView.scrollToPosition(position);
         }

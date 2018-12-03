@@ -1,6 +1,7 @@
 package csulb.cecs343.lair;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -60,9 +61,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>
             }
         }
         );
-        holder.box.setChecked(e.isSelected());
 
-        //animate(holder);
+        holder.box.setChecked(e.isSelected());
+        holder.container.setBackgroundColor(Color.parseColor("#403F3F"));
     }
 
     @Override

@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:background="#00aa66cc"
         android:scaleType="fitCenter"
-        android:src="@drawable/folder_icon"
+        android:src="@drawable/ic_folder_purple"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="139dp" />
 

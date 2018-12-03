@@ -25,4 +25,6 @@
     <color name="transparent_white_hex_8">#88ffffff</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="red_pastel">#c95858</color>
+    <color name="grayMedium">#333333</color>
+    <color name="colorGreen">#5b9754</color>
 </resources>

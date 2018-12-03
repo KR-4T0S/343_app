@@ -12,6 +12,7 @@ public class ViewHolder extends RecyclerView.ViewHolder
     public TextView name;
     public ImageView image;
     public CheckBox box;
+    public LinearLayout container;
 
     ViewHolder(View itemView)
     {
@@ -19,5 +20,6 @@ public class ViewHolder extends RecyclerView.ViewHolder
         name = (TextView) itemView.findViewById(R.id.name);
         image = (ImageView) itemView.findViewById(R.id.image);
         box = (CheckBox) itemView.findViewById(R.id.checkbox);
+        container =  (LinearLayout) itemView.findViewById(R.id.file_menu_row);
     }
 }
