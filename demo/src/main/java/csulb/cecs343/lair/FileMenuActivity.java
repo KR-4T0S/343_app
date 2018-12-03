@@ -1,11 +1,15 @@
 package csulb.cecs343.lair;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Path;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -76,6 +80,13 @@ public class FileMenuActivity extends AppCompatActivity
         itemAnimator.setRemoveDuration(1000);
         mRecyclerView.setItemAnimator(itemAnimator);*/
 
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+        }
+
+
         controls();
     }
 
@@ -90,21 +101,19 @@ public class FileMenuActivity extends AppCompatActivity
                 new MaterialFilePicker()
                         .withActivity(FileMenuActivity.this)
                         .withRequestCode(1000)
-                        .withFilter(Pattern.compile(".*\\.jpg$")) // Filtering files and directories by file name using regexp
-                        .withFilterDirectories(true) // Set directories filterable (false by default)
+                        //.withFilter(Pattern.compile(".*\\.jpg$")) // Filtering files and directories by file name using regexp
+                        //.withFilterDirectories(true) // Set directories filterable (false by default)
                         .withHiddenFiles(true) // Show hidden files and folders
                         .start();
-                //File path = context.getFileDir();
-                //File storeIn = new File(path, "example");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
-                builder.setTitle("Enter The File Name");
+                //AlertDialog.Builder builder = new AlertDialog.Builder(FileMenuActivity.this);
+                //builder.setTitle("Enter The File Name");
 
-                final EditText input = new EditText(FileMenuActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
+                //final EditText input = new EditText(FileMenuActivity.this);
+                //input.setInputType(InputType.TYPE_CLASS_TEXT);
+                //builder.setView(input);
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                /*builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -137,8 +146,9 @@ public class FileMenuActivity extends AppCompatActivity
                         dialog.cancel();
                     }
                 });
+                */
 
-                builder.show();
+                //builder.show();
             }
         }
         );
@@ -259,7 +269,31 @@ public class FileMenuActivity extends AppCompatActivity
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            textView.setText(filePath);
+            String filename= filePath.substring(filePath.lastIndexOf("/")+1);
+            File path = getFilesDir();
+            File storeIn = new File(path, filePath);
+            int position = 0;
+            mData.add(position, new Element(filename, R.drawable.ic_file, false, true, false));
+            mAdapter.notifyItemInserted(position);
+            mRecyclerView.scrollToPosition(position);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode)
+        {
+            case 1001:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(this, "Permission not granted!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
         }
     }
 }
