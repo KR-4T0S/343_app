@@ -311,7 +311,7 @@ public class LoginActivity extends AppCompatActivity implements
             // int num = (myDB.getFailedRec() + 1);
             //   Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
 
-            if (myDB.getFailedRec() >= 4){
+            if (myDB.getFailedRec() >= 3){
                 Toast.makeText(this, "Facial Recognition failed 3 times in a row. Enter PINCODE to reset facial recognition model!", Toast.LENGTH_SHORT).show();
                 Intent k = new Intent(LoginActivity.this, UserAuthenticationActivity.class);
                 startActivity(k);
