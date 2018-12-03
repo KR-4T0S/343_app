@@ -60,8 +60,8 @@ public class FileMenuActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private String mInputResult;
     TextView textView;
-    private final List<String> IMAGE_EXTENSIONS = new ArrayList<>(Arrays.asList("jpg", "png"));
-    private final List<String> VIDEO_EXTENSIONS = new ArrayList<>(Arrays.asList("mp4"));
+    private final List<String> IMAGE_EXTENSIONS = new ArrayList<>(Arrays.asList("jpg", "png", "gif", "jpeg", "tiff"));
+    private final List<String> VIDEO_EXTENSIONS = new ArrayList<>(Arrays.asList("mp4", "3gp", "ts", "webm", "mkv"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -273,8 +273,8 @@ public class FileMenuActivity extends AppCompatActivity
         {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
-            File path = getFilesDir();
-            File storeIn = new File(path, filePath);
+            //File path = getFilesDir();
+            //File storeIn = new File(path, filePath);
 
             int fileType = 0;
             String ext = "";

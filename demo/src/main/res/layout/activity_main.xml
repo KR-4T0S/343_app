@@ -66,16 +66,6 @@
             android:textColor="@android:color/background_light"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/add_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:background="@color/primaryDark"
-            android:text="@string/add_person"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
-
     </FrameLayout>
 
 </RelativeLayout>

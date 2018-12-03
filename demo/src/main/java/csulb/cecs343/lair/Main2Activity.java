@@ -20,12 +20,8 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Run other tests here BEFORE running any activity
-        // init_test_filedb(); // test file db
-
         // Run instances of activities here
         init_app_login(); // this initiates with login (main) page, comment out for testing other activities.
-        //init_test_fileview();
 
     }
 
@@ -84,46 +80,47 @@ public class Main2Activity extends AppCompatActivity {
         );
     }
 
-    private void init_test_filedb() {
-        // START Initiate db //
-        FileDatabaseHelper db = new FileDatabaseHelper(this);
-        db.getWritableDatabase(); // THIS IS REQUIRED
-        // END Initiate db //
+//    private void init_test_filedb() {
+//        // START Initiate db //
+//        FileDatabaseHelper db = new FileDatabaseHelper(this);
+//        db.getWritableDatabase(); // THIS IS REQUIRED
+//        // END Initiate db //
+//
+//        db.addFolder("ROOT", "/", "");
+//        db.addFolder("videos", "/root","1");
+//        db.addFolder("pictures", "/root", "1");
+//
+//        db.addFile("test file", "jpg","/root", "1");
+//        db.addFile("Fido at the beach", "mp4", "/root/videos","2");
+//        db.addFile("cat playing piano", "mp4", "/root/videos","2");
+//        db.addFile("evolution of dance", "mp4", "/root/videos","2");
+//        db.addFile("family reunion 2016", "png", "/root/pictures","3");
+//        db.addFile("totally not nudes", "png", "/root/pictures","3");
+//
+//        db.close();
+//        db.deleteDB(this);
+//    }
 
-        db.addFolder("ROOT", "/", "");
-        db.addFolder("videos", "/root","1");
-        db.addFolder("pictures", "/root", "1");
-
-        db.addFile("test file", "jpg","/root", "1");
-        db.addFile("Fido at the beach", "mp4", "/root/videos","2");
-        db.addFile("cat playing piano", "mp4", "/root/videos","2");
-        db.addFile("evolution of dance", "mp4", "/root/videos","2");
-        db.addFile("family reunion 2016", "png", "/root/pictures","3");
-        db.addFile("totally not nudes", "png", "/root/pictures","3");
-
-        db.close();
-        db.deleteDB(this);
-    }
-
-    private void init_test_fileview() {
-        // Test Image
+//    private void init_test_fileview() {
+//        // Test Image
 //        String fileSource = "/data/data/com.google.android.cameraview.demo/files/kHPxj2F.jpg";
 //        String fileName = "Test Image";
 //        Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
 //        fileview.putExtra("fileSource", fileSource);
 //        fileview.putExtra("fileName", fileName);
 //        fileview.putExtra("type", FileViewActivity.IMAGE);
+//
+//        // Test Video
+//        String vidSource = "/data/data/com.google.android.cameraview.demo/files/infinite dab.mp4";
+//        String vidName = "Infinite Dab";
+//        Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
+//        fileview.putExtra("fileSource", vidSource);
+//        fileview.putExtra("fileName", vidName);
+//        fileview.putExtra("type", FileViewActivity.VIDEO);
+//
+//        startActivity(fileview);
+//    }
 
-        // Test Video
-        String vidSource = "/data/data/com.google.android.cameraview.demo/files/infinite dab.mp4";
-        String vidName = "Infinite Dab";
-        Intent fileview = new Intent(Main2Activity.this, FileViewActivity.class);
-        fileview.putExtra("fileSource", vidSource);
-        fileview.putExtra("fileName", vidName);
-        fileview.putExtra("type", FileViewActivity.VIDEO);
-
-        startActivity(fileview);
-    }
     @Override
     public void onBackPressed() {}
 }
