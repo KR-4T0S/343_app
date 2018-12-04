@@ -72,13 +72,22 @@ public class FileMenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_filemenu);
         textView = (TextView) findViewById(R.id.textView3);
         db.getWritableDatabase();
-        db.addFolder("root", "/", "");
+
+        List<String> topLevel = db.getChildrenFolders("");
+        if (topLevel.size() == 0)
+        {
+            db.addFolder("root", "/", "");
+        }
+
+        for (String item : CurrentFolderLevel.levelLog)
+        {
+            //Toast.makeText(FileMenuActivity.this, item, Toast.LENGTH_SHORT).show();
+        }
 
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
         mData = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
-        //mLayoutManager.setAutoMeasureEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerViewAdapter(mData, mContext);
         mRecyclerView.setAdapter(mAdapter);
@@ -93,6 +102,8 @@ public class FileMenuActivity extends AppCompatActivity
         {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         }
+
+        deleteUIElements();
 
         loadData();
 
@@ -110,8 +121,6 @@ public class FileMenuActivity extends AppCompatActivity
                 new MaterialFilePicker()
                         .withActivity(FileMenuActivity.this)
                         .withRequestCode(1000)
-                        //.withFilter(Pattern.compile(".*\\.jpg$")) // Filtering files and directories by file name using regexp
-                        //.withFilterDirectories(true) // Set directories filterable (false by default)
                         .withHiddenFiles(true) // Show hidden files and folders
                         .start();
             }
@@ -143,7 +152,7 @@ public class FileMenuActivity extends AppCompatActivity
                         mData.add(position, new Element(title, "", 0, R.drawable.ic_folder_purple, false, true, false));
                         mAdapter.notifyItemInserted(position);
                         mRecyclerView.scrollToPosition(position);
-                        db.addFolder(title, "/root", "1");
+                        db.addFolder(title, "/root", CurrentFolderLevel.level);
                     }
                 });
 
@@ -167,21 +176,82 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                List<String> files = db.getChildrenFiles("1");
+                List<String> _files = db.getChildrenFiles(CurrentFolderLevel.level);
 
-                for (String f : files)
+                for (String f : _files)
                 {
                     Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
                 }
 
-                List<String> folders = db.getChildrenFolders("1");
+                List<String> _folders = db.getChildrenFolders(CurrentFolderLevel.level);
 
-                for (String f : folders)
+                for (String f : _folders)
                 {
                     Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
                 }
 
-                deleteElements();
+                int position = 0;
+                List<Integer> positions = new ArrayList<>();
+                List<String> folderIDsToDelete = new ArrayList<>();
+                List<String> fileIDsToDelete = new ArrayList<>();
+                HashMap<String, String> folderIds = new HashMap<String, String>();
+                HashMap<String, String> fileIds = new HashMap<String, String>();
+
+                List<String> folders = db.getChildrenFolders(CurrentFolderLevel.level);
+
+                for (String folder : folders)
+                {
+                    String splitResult[] = folder.split("\\|");
+                    folderIds.put(splitResult[1], splitResult[0]);
+                }
+
+                List<String> files = db.getChildrenFiles(CurrentFolderLevel.level);
+
+                for (String file : files)
+                {
+                    String splitResult[] = file.split("\\|");
+                    String filename = splitResult[2] + "." + splitResult[3];
+                    fileIds.put(filename, splitResult[0]);
+                }
+
+                for (Element e : mData)
+                {
+                    if (e.isSelected())
+                    {
+                        positions.add(position);
+
+                        if (e.isFolder())
+                        {
+                            folderIDsToDelete.add(folderIds.get(e.title));
+                        }
+                        else
+                        {
+                            fileIDsToDelete.add(fileIds.get(e.title));
+                        }
+                    }
+                 position++;
+                }
+
+                int dataSize = mData.size();
+
+                for (int i = dataSize - 1; i >= 0; i--)
+                {
+                    if (positions.contains(i))
+                    {
+                        mData.remove(i);
+                        mAdapter.notifyItemRemoved(i);
+                    }
+                }
+
+                for (String id : folderIDsToDelete)
+                {
+                    db.deleteFolder(id);
+                }
+
+                for (String id : fileIDsToDelete)
+                {
+                    db.deleteFile(id);
+                }
             }
         }
         );
@@ -197,15 +267,31 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onLongClick(View view, int position)
             {
-                if (mData.get(position).isFolder())
+                Element e = mData.get(position);
+
+                if (e.isFolder())
                 {
+                    String newLevel = "";
+                    List<String> folders = db.getChildrenFolders(CurrentFolderLevel.level);
+
+                    for (String folder : folders)
+                    {
+                        String splitResult[] = folder.split("\\|");
+                        Toast.makeText(FileMenuActivity.this, splitResult[1] + " == " + e.title, Toast.LENGTH_SHORT).show();
+                        if (splitResult[1] == e.title)
+                        {
+                            newLevel = splitResult[0];
+                        }
+                    }
+
+                    CurrentFolderLevel.level = newLevel;
+                    CurrentFolderLevel.levelLog.add(newLevel);
+
                     Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
                     startActivity(intent);
                 }
                 else
                 {
-                    Element e = mData.get(position);
-
                     Intent fileView = new Intent(FileMenuActivity.this, FileViewActivity.class);
                     fileView.putExtra("fileSource", e.path);
                     fileView.putExtra("fileName", e.title);
@@ -226,7 +312,7 @@ public class FileMenuActivity extends AppCompatActivity
         if (requestCode == 1000 && resultCode == RESULT_OK)
         {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
             int fileType = 0;
             String ext = "";
@@ -251,83 +337,27 @@ public class FileMenuActivity extends AppCompatActivity
                 mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file_image, false, false, true));
             }
 
-            db.addFile(name, ext, filePath, "1");
+            db.addFile(name, ext, filePath, CurrentFolderLevel.level);
 
             mAdapter.notifyItemInserted(position);
             mRecyclerView.scrollToPosition(position);
         }
     }
 
-    public void deleteElements()
+    public void deleteUIElements()
     {
-        int position = 0;
-        List<Integer> positions = new ArrayList<>();
-        List<String> folderIDsToDelete = new ArrayList<>();
-        List<String> fileIDsToDelete = new ArrayList<>();
-        HashMap<String, String> folderIds = new HashMap<String, String>();
-        HashMap<String, String> fileIds = new HashMap<String, String>();
-
-        List<String> folders = db.getChildrenFolders("1");
-
-        for (String folder : folders)
-        {
-            String splitResult[] = folder.split("\\|");
-            folderIds.put(splitResult[1], splitResult[0]);
-        }
-
-        List<String> files = db.getChildrenFiles("1");
-
-        for (String file : files)
-        {
-            String splitResult[] = file.split("\\|");
-            String filename = splitResult[2] + "." + splitResult[3];
-            fileIds.put(filename, splitResult[0]);
-        }
-
-        for (Element e : mData)
-        {
-            if (e.isSelected())
-            {
-                positions.add(position);
-
-                if (e.isFolder())
-                {
-                    folderIDsToDelete.add(folderIds.get(e.title));
-                }
-                else
-                {
-                    fileIDsToDelete.add(fileIds.get(e.title));
-                }
-            }
-
-            position++;
-        }
-
         int dataSize = mData.size();
 
         for (int i = dataSize - 1; i >= 0; i--)
         {
-            if (positions.contains(i))
-            {
-                mData.remove(i);
-                mAdapter.notifyItemRemoved(i);
-            }
-        }
-
-        for (String id : folderIDsToDelete)
-        {
-            db.deleteFolder(id);
-        }
-
-        for (String id : fileIDsToDelete)
-        {
-            db.deleteFile(id);
+            mData.remove(i);
+            mAdapter.notifyItemRemoved(i);
         }
     }
 
     public void loadData()
     {
-        List<String> folders = db.getChildrenFolders("1");
+        List<String> folders = db.getChildrenFolders(CurrentFolderLevel.level);
 
         for (String folder : folders)
         {
@@ -338,7 +368,7 @@ public class FileMenuActivity extends AppCompatActivity
             mRecyclerView.scrollToPosition(position);
         }
 
-        List<String> files = db.getChildrenFiles("1");
+        List<String> files = db.getChildrenFiles(CurrentFolderLevel.level);
 
         for (String file : files)
         {
@@ -382,6 +412,23 @@ public class FileMenuActivity extends AppCompatActivity
         }
     }
 
-/*    @Override
-    public void onBackPressed() {}*/
+    @Override
+    public void onBackPressed()
+    {
+        if (CurrentFolderLevel.level == "1")
+        {
+            Intent intent = new Intent(FileMenuActivity.this, Main2Activity.class);
+            startActivity(intent);
+        }
+        else
+        {
+            int logSize = CurrentFolderLevel.levelLog.size();
+            CurrentFolderLevel.levelLog.remove(logSize - 1);
+            logSize = CurrentFolderLevel.levelLog.size();
+            CurrentFolderLevel.level = CurrentFolderLevel.levelLog.get(logSize - 1);
+
+            Intent intent = new Intent(FileMenuActivity.this, FileMenuActivity.class);
+            startActivity(intent);
+        }
+    }
 }
