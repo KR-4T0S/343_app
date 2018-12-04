@@ -79,11 +79,6 @@ public class FileMenuActivity extends AppCompatActivity
             db.addFolder("root", "/", "");
         }
 
-        for (String item : CurrentFolderLevel.levelLog)
-        {
-            //Toast.makeText(FileMenuActivity.this, item, Toast.LENGTH_SHORT).show();
-        }
-
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.items);
         mData = new ArrayList<>();
@@ -277,8 +272,7 @@ public class FileMenuActivity extends AppCompatActivity
                     for (String folder : folders)
                     {
                         String splitResult[] = folder.split("\\|");
-                        Toast.makeText(FileMenuActivity.this, splitResult[1] + " == " + e.title, Toast.LENGTH_SHORT).show();
-                        if (splitResult[1] == e.title)
+                        if (splitResult[1].equals(e.title))
                         {
                             newLevel = splitResult[0];
                         }
@@ -415,7 +409,7 @@ public class FileMenuActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        if (CurrentFolderLevel.level == "1")
+        if (CurrentFolderLevel.level.equals("1"))
         {
             Intent intent = new Intent(FileMenuActivity.this, Main2Activity.class);
             startActivity(intent);
