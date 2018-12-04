@@ -50,7 +50,7 @@ public class TrainModelActivity extends AppCompatActivity {
     private File destination = null;
     private String imgPath = null;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
-    DatabaseHelper myDB;
+    private DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

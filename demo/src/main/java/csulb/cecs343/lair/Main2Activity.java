@@ -39,6 +39,7 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         mFileMenuButton = (Button) findViewById(R.id.file_menu_button);
         mFileMenuButton.setOnClickListener(new View.OnClickListener()
         {
