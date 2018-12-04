@@ -10,6 +10,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private Button mLoginButton;
     private Button mCreateProfileButton;
+    private Button mFileMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

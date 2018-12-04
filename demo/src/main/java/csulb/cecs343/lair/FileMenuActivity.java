@@ -94,6 +94,7 @@ public class FileMenuActivity extends AppCompatActivity
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         }
 
+        loadData();
 
         controls();
     }
@@ -166,6 +167,20 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                List<String> files = db.getChildrenFiles("1");
+
+                for (String f : files)
+                {
+                    Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
+                }
+
+                List<String> folders = db.getChildrenFolders("1");
+
+                for (String f : folders)
+                {
+                    Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
+                }
+
                 deleteElements();
             }
         }
@@ -236,7 +251,7 @@ public class FileMenuActivity extends AppCompatActivity
                 mData.add(position, new Element(fileName, filePath, fileType, R.drawable.ic_file_image, false, false, true));
             }
 
-            db.addFile(name, ext, "/root", "1");
+            db.addFile(name, ext, filePath, "1");
 
             mAdapter.notifyItemInserted(position);
             mRecyclerView.scrollToPosition(position);
@@ -308,6 +323,45 @@ public class FileMenuActivity extends AppCompatActivity
         {
             db.deleteFile(id);
         }
+    }
+
+    public void loadData()
+    {
+        List<String> folders = db.getChildrenFolders("1");
+
+        for (String folder : folders)
+        {
+            String splitResult[] = folder.split("\\|");
+            int position = 0;
+            mData.add(position, new Element(splitResult[1], "", 0, R.drawable.ic_folder_purple, false, true, false));
+            mAdapter.notifyItemInserted(position);
+            mRecyclerView.scrollToPosition(position);
+        }
+
+        List<String> files = db.getChildrenFiles("1");
+
+        for (String file : files)
+        {
+            String splitResult[] = file.split("\\|");
+            String filename = splitResult[2] + "." + splitResult[3];
+
+            int fileType = 0;
+
+            if (VIDEO_EXTENSIONS.contains(splitResult[3]))
+            {
+                fileType = 1;
+            }
+            else
+            {
+                fileType = 0;
+            }
+
+            int position = mData.size();
+            mData.add(position, new Element(filename, splitResult[1], fileType, R.drawable.ic_file_image, false, false, true));
+            mAdapter.notifyItemInserted(position);
+            mRecyclerView.scrollToPosition(position);
+        }
+
     }
 
     @Override

@@ -37,8 +37,8 @@
 
     <Button
         android:id="@+id/file_menu_button"
-        android:layout_width="176dp"
-        android:layout_height="wrap_content"
+        android:layout_width="194dp"
+        android:layout_height="80dp"
         android:text="File Menu" />
 
 </LinearLayout>
