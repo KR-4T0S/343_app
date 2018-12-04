@@ -412,7 +412,7 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
             Log.d(TAG, "onPictureTaken " + data.length);
-            Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
+            Toast.makeText(cameraView.getContext(), "Face Scan Initialized", Toast.LENGTH_SHORT)
                     .show();
             Bitmap bp = BitmapFactory.decodeByteArray(data, 0, data.length);
             new LoginActivity.recognizeAsync().execute(bp);
