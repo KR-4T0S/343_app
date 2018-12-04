@@ -316,8 +316,6 @@ public class LoginActivity extends AppCompatActivity implements
                 Intent k = new Intent(LoginActivity.this, UserAuthenticationActivity.class);
                 startActivity(k);
             }
-
-
         } else {
             for(int i=0; i<names.size(); i++) {
                 msg += names.get(i).split(Pattern.quote("."))[0];

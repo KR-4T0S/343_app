@@ -10,6 +10,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private Button mLoginButton;
     private Button mCreateProfileButton;
+    private Button mFileMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         mFileMenuButton = (Button) findViewById(R.id.file_menu_button);
         mFileMenuButton.setOnClickListener(new View.OnClickListener()
         {
@@ -48,6 +50,11 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void init_auth() {
+        Intent intent = new Intent(Main2Activity.this, UserAuthenticationActivity.class);
+        startActivity(intent);
     }
 
     @Override
