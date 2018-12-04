@@ -52,11 +52,6 @@ public class Main2Activity extends AppCompatActivity {
         });
     }
 
-    private void init_auth() {
-        Intent intent = new Intent(Main2Activity.this, UserAuthenticationActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onBackPressed() {
         //TODO: nothing, or maybe something?
