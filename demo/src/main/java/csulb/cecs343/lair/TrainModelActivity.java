@@ -17,18 +17,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-//import com.google.android.cameraview.demo.FileUtils;
-//import com.google.android.cameraview.demo.MainActivity;
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceRec;
 import com.tzutalin.dlib.VisionDetRet;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,7 +50,7 @@ public class TrainModelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   setContentView(R.layout.activity_add_person);
+
         setContentView(R.layout.activity_train_model);
 
         myDB = new DatabaseHelper(this);

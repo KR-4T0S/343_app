@@ -108,11 +108,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public String random_test(){
-        String r = "whatever";
-        return r;
-    }
-
     public String getPincode(){
         String pincode = "";
         SQLiteDatabase dber = this.getReadableDatabase();
@@ -120,11 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = getResCount();
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()){
-            //          buffer.append("Id : " + res.getString(0) + "\n");
             buffer.append(res.getString(1));
-            //         buffer.append("userTrained : " + res.getString(2) + "\n");
-            //         buffer.append("FailedFace : " + res.getString(3) + "\n");
-            //          buffer.append("FailedPin : " + res.getString(3) + "\n");
         }
 
         pincode = buffer.toString();
@@ -139,11 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = getResCount();
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
-            //          buffer.append("Id : " + res.getString(0) + "\n");
-            //buffer.append("pincode : " + res.getString(1));
             buffer.append(res.getString(2));
-            //         buffer.append("FailedFace : " + res.getString(3) + "\n");
-            //          buffer.append("FailedPin : " + res.getString(3) + "\n");
         }
 
         trained = buffer.toString();
@@ -158,16 +145,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = getResCount();
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
-            //          buffer.append("Id : " + res.getString(0) + "\n");
-            //buffer.append("pincode : " + res.getString(1));
-            // buffer.append(res.getString(2));
             buffer.append(res.getString(3));
-            //          buffer.append("FailedPin : " + res.getString(3) + "\n");
         }
         Integer num = new Integer(0);
 
         num = Integer.parseInt(buffer.toString());
-        //  trained = buffer.toString();
+
         res.close();
         return num;
     }
@@ -179,16 +162,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = getResCount();
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
-            //          buffer.append("Id : " + res.getString(0) + "\n");
-            //buffer.append("pincode : " + res.getString(1));
-            // buffer.append(res.getString(2));
-            //   buffer.append(res.getString(3));
             buffer.append(res.getString(4));
         }
         Integer num = new Integer(0);
 
         num = Integer.parseInt(buffer.toString());
-        //  trained = buffer.toString();
         res.close();
         return num;
     }

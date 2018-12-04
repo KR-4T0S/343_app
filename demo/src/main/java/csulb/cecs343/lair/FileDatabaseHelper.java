@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,11 +70,6 @@ public class FileDatabaseHelper extends SQLiteOpenHelper {
         mCursor.close();
         return false;
     }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////// Query functions /////////////////////////////////
-    ////////////////// Get / Set methods for queries //////////////////////
-    ///////////////////////////////////////////////////////////////////////
 
     public boolean addFolder(String _folderName, String _folderSource, String _folderParentFolderID) {
         SQLiteDatabase db = this.getWritableDatabase();

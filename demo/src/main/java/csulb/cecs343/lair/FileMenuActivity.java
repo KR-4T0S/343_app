@@ -2,52 +2,28 @@ package csulb.cecs343.lair;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Path;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Button;
-
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import static java.security.AccessController.getContext;
-
-
 
 public class FileMenuActivity extends AppCompatActivity
 {
@@ -86,11 +62,6 @@ public class FileMenuActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerViewAdapter(mData, mContext);
         mRecyclerView.setAdapter(mAdapter);
-
-/*        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        mRecyclerView.setItemAnimator(itemAnimator);*/
 
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)

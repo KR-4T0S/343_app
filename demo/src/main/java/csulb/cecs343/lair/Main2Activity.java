@@ -10,7 +10,6 @@ public class Main2Activity extends AppCompatActivity {
 
     private Button mLoginButton;
     private Button mCreateProfileButton;
-    private Button mFileMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +35,6 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Main2Activity.this, CreateProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mFileMenuButton = (Button) findViewById(R.id.file_menu_button);
-        mFileMenuButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(Main2Activity.this, FileMenuActivity.class);
                 startActivity(intent);
             }
         });

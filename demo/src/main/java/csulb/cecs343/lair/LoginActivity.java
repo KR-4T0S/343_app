@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -36,24 +35,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.cameraview.CameraView;
-//import com.google.android.cameraview.demo.AddPerson;
-//import com.google.android.cameraview.demo.FileUtils;
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceRec;
 import com.tzutalin.dlib.VisionDetRet;
-
 import junit.framework.Assert;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import csulb.cecs343.lair.R;
-
-// This demo app uses dlib face recognition based on resnet
+// This app uses dlib face recognition based on resnet
 public class LoginActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -95,11 +87,6 @@ public class LoginActivity extends AppCompatActivity implements
                         mCameraView.takePicture();
                     }
                     break;
-                //            case R.id.add_person:
-                //                Intent i = new Intent(LoginActivity.this, AddPerson.class);
-                //                startActivity(i);
-                //                finish();
-                //                break;
             }
         }
     };
@@ -114,7 +101,6 @@ public class LoginActivity extends AppCompatActivity implements
         myDB = new DatabaseHelper(this);
         checkProfileExists();
 
-        //checkPermissions();
 
         mCameraView = (CameraView) findViewById(R.id.camera);
         if (mCameraView != null) {
@@ -124,10 +110,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
         }
-        //  Button add_person = (Button) findViewById(R.id.add_person);
-        //  if (add_person != null) {
-        //      add_person.setOnClickListener(mOnClickListener);
-        //  }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -178,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements
                     FileUtils.copyFileFromRawToOthers(LoginActivity.this, R.raw.dlib_face_recognition_resnet_model_v1, Constants.getFaceDescriptorModelPath());
                 }
             } else {
-                //Log.d(TAG, "error in setting dlib_rec_example directory");
+                //TODO: This statement should probably be removed, but I'm too afraid to do it at this point.
             }
             mFaceRec = new FaceRec(Constants.getDLibDirectoryPath());
             changeProgressDialogMessage(dialog, "Starting...");
@@ -308,8 +291,6 @@ public class LoginActivity extends AppCompatActivity implements
         if (names.isEmpty()) {
             msg = "No face detected or Unknown person";
             myDB.updateFailedRec(myDB.getFailedRec() + 1);
-            // int num = (myDB.getFailedRec() + 1);
-            //   Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec() + 1), Toast.LENGTH_SHORT).show();
 
             if (myDB.getFailedRec() >= 3){
                 Toast.makeText(this, "Facial Recognition failed 3 times in a row. Enter PINCODE to reset facial recognition model!", Toast.LENGTH_SHORT).show();
@@ -325,7 +306,6 @@ public class LoginActivity extends AppCompatActivity implements
             myDB.updateFailedRec(0);
             Intent m = new Intent(LoginActivity.this, ProfileMenuActivity.class);
             startActivity(m);
-            //     Toast.makeText(this, "Failed rec times:" + (myDB.getFailedRec()), Toast.LENGTH_SHORT).show();
         }
         return msg;
     }

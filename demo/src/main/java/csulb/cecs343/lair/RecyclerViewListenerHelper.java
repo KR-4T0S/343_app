@@ -39,7 +39,6 @@ public class RecyclerViewListenerHelper implements RecyclerView.OnItemTouchListe
     @Override
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent e)
     {
-
         View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
         if (child != null && clickListener != null && gestureDetector.onTouchEvent(e))
         {
@@ -49,14 +48,12 @@ public class RecyclerViewListenerHelper implements RecyclerView.OnItemTouchListe
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e)
-    {
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
 
     }
 
     @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept)
-    {
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
     }
 }
