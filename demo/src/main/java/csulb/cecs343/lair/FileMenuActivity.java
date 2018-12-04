@@ -382,7 +382,7 @@ public class FileMenuActivity extends AppCompatActivity
     {
         if (CurrentFolderLevel.level.equals("1"))
         {
-            Intent intent = new Intent(FileMenuActivity.this, Main2Activity.class);
+            Intent intent = new Intent(FileMenuActivity.this, ProfileMenuActivity.class);
             startActivity(intent);
         }
         else
