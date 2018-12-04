@@ -142,20 +142,6 @@ public class FileMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                List<String> _files = db.getChildrenFiles(CurrentFolderLevel.level);
-
-                for (String f : _files)
-                {
-                    Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
-                }
-
-                List<String> _folders = db.getChildrenFolders(CurrentFolderLevel.level);
-
-                for (String f : _folders)
-                {
-                    Toast.makeText(FileMenuActivity.this, f, Toast.LENGTH_SHORT).show();
-                }
-
                 int position = 0;
                 List<Integer> positions = new ArrayList<>();
                 List<String> folderIDsToDelete = new ArrayList<>();
@@ -217,6 +203,11 @@ public class FileMenuActivity extends AppCompatActivity
                 for (String id : fileIDsToDelete)
                 {
                     db.deleteFile(id);
+                }
+
+                if (folderIDsToDelete.size() > 0 || fileIDsToDelete.size() > 0)
+                {
+                    Toast.makeText(FileMenuActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         }
